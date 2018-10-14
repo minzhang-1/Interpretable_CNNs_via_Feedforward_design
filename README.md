@@ -18,6 +18,7 @@ maintained by Min Zhang and Jiali Duan.<br>
     * Command `python Getweight.py`, getting fully connected layers kernels and training accuracy
     * Command `python mnist_test.py` or `python test.py`, getting test accuracy
 
+#### Adversarial attack
 - [Function]
     * BP/ff models are provided for cifar10 and mnist dataset under folder `dataset_structre_model`
     * Models can be trained from scratch if no filename is not specified
