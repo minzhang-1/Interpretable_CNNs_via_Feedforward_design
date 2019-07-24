@@ -8,7 +8,7 @@ import sklearn
 def main():
 	# load data
 	fr=open('pca_params.pkl','rb')  
-	pca_params=pickle.load(fr)
+	pca_params=pickle.load(fr, encoding='latin')
 	fr.close()
 
 	# read data
