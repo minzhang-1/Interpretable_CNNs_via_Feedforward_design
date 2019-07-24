@@ -14,7 +14,7 @@ from sklearn.metrics.pairwise import euclidean_distances
 def main():
 	# load data
 	fr=open('pca_params.pkl','rb')  
-	pca_params=pickle.load(fr, encoding='latin1')
+	pca_params=pickle.load(fr, encoding='latin')
 	fr.close()
 
 	# read data
@@ -58,10 +58,10 @@ def main():
 			for i in range(num_clusters[k]):
 				for t in range(use_classes):
 					for j in range(feature.shape[0]):
-						if pred_labels[j]==i and train_labels[j]==t:
+						if pred_labels[j]==i and test_labels[j]==t:
 							num_clas[i,t]+=1
-			acc_train=np.sum(np.amax(num_clas, axis=1))/feature.shape[0]
-			print(k,' layer LSR testing acc is {}'.format(acc_train))
+			acc_test=np.sum(np.amax(num_clas, axis=1))/feature.shape[0]
+			print(k,' layer LSR testing acc is {}'.format(acc_test))
 
 			# Relu
 			for i in range(feature.shape[0]):
@@ -70,8 +70,8 @@ def main():
 						feature[i,j]=0
 		else:
 			pred_labels=np.argmax(feature, axis=1)
-			acc_train=sklearn.metrics.accuracy_score(test_labels,pred_labels)
-			print('testing acc is {}'.format(acc_train))
+			acc_test=sklearn.metrics.accuracy_score(test_labels,pred_labels)
+			print('testing acc is {}'.format(acc_test))
 
 
 if __name__ == '__main__':
