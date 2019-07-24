@@ -93,11 +93,8 @@ def find_kernels_pca(samples, num_kernels, energy_percent):
 	:param energy_percent: the percent of energy to be preserved
 	:return: kernels, sample_mean
 	'''
-	if  num_kernels:
-		num_components=num_kernels
-		pca=PCA(n_components=num_components, svd_solver='full')
-	else:
-		pca=PCA(n_components=samples.shape[1], svd_solver='full')
+
+	pca=PCA(n_components=samples.shape[1], svd_solver='full')
 
 	pca.fit(samples)
 
@@ -105,6 +102,8 @@ def find_kernels_pca(samples, num_kernels, energy_percent):
 	if  energy_percent:
 		energy=np.cumsum(pca.explained_variance_ratio_)
 		num_components=np.sum(energy<energy_percent)+1
+	else:
+		num_components=num_kernels
 
 	kernels=pca.components_[:num_components,:]
 	mean=pca.mean_
@@ -176,7 +175,7 @@ def multi_Saab_transform(images, labels, kernel_sizes, num_kernels, energy_perce
 			bias=np.max(bias)
 			pca_params['Layer_%d/bias'%i]=bias
 			# Add bias
-			sample_patches_centered_w_bias=sample_patches_centered+np.sqrt(num_channels)*bias	
+			sample_patches_centered_w_bias=sample_patches_centered+1/np.sqrt(num_channels)*bias
 			# Transform to get data for the next stage
 			transformed=np.matmul(sample_patches_centered_w_bias, np.transpose(kernels))
 	    	# Remove bias
@@ -236,7 +235,7 @@ def initialize(sample_images, pca_params):
 		else:
 			bias=pca_params['Layer_%d/bias'%i]
 			# Add bias
-			sample_patches_centered_w_bias=sample_patches_centered+np.sqrt(num_channels)*bias	
+			sample_patches_centered_w_bias=sample_patches_centered+1/np.sqrt(num_channels)*bias
 			# Transform to get data for the next stage
 			transformed=np.matmul(sample_patches_centered_w_bias, np.transpose(kernels))
 	    	# Remove bias
