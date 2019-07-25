@@ -28,7 +28,6 @@ def main():
 	feat=pickle.load(fr, encoding='latin1')
 	fr.close()
 	feature=feat['testing_feature']
-	test_labels=feat['testing_labels']
 	feature=np.absolute(feature)
 	feature=feature.reshape(feature.shape[0],-1)
 	print("S4 shape:", feature.shape)
