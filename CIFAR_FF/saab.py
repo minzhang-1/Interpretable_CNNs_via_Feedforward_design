@@ -202,7 +202,7 @@ def multi_Saab_transform(images, labels, kernel_sizes, num_kernels, energy_perce
 			bias=np.max(bias)
 			pca_params['Layer_%d/bias'%i]=bias
 			# Add bias
-			sample_patches_centered_w_bias=sample_patches+bias
+			sample_patches_centered_w_bias=sample_patches+1/np.sqrt(num_channels)*bias
 			# Transform to get data for the next stage
 			transformed=np.matmul(sample_patches_centered_w_bias, np.transpose(kernels))
 	    	# Remove bias
@@ -253,7 +253,7 @@ def initialize(sample_images, pca_params):
 		else:
 			bias=pca_params['Layer_%d/bias'%i]
 			# Add bias
-			sample_patches_centered_w_bias=sample_patches+bias
+			sample_patches_centered_w_bias=sample_patches+1/np.sqrt(num_channels)*bias
 			# Transform to get data for the next stage
 			transformed=np.matmul(sample_patches_centered_w_bias, np.transpose(kernels))
 	    	# Remove bias
