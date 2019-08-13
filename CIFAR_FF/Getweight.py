@@ -29,11 +29,6 @@ def main():
 	# feature normalization
 	std_var=(np.std(feature, axis=0)).reshape(1,-1)
 	feature=feature/std_var
-	# relu
-	for i in range(feature.shape[0]):
-		for j in range(feature.shape[1]):
-			if feature[i,j]<0:
-				feature[i,j]=0
 
 	num_clusters=[200, 100, 10]
 	use_classes=class_list
